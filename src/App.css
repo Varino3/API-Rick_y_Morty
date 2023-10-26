@@ -1,0 +1,104 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* VIVO O MUERTO */
+.status-circulo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 60%;
+  margin-left: 85%;
+}
+
+.vivo {
+  background-color: green;
+}
+
+.muerto {
+  background-color: red;
+}
+
+/* ESTILO DE LA CARTA */
+.padre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contenedor {
+  width: 50%;
+}
+
+.carta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 2px solid black;
+  border-radius: 20%;
+  padding: 1rem 6rem;
+  height: 20rem;
+}
+
+.carta>img {
+  width: 60%;
+}
+
+/* PAGINACIÓN */
+/* .paginacion{
+  
+} */
+
+.paginacion ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.paginacion li {
+  color: black;
+  text-decoration: none;
+}

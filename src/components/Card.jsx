@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 function Card() {
     const [characters, setCharacters] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const charactersPerPage = 10; // Personajes por página
+    const charactersPerPage = 4; // Personajes por página
 
     useEffect(() => {
         // Conexión GET con la API

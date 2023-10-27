@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import '../App.css';
 
 function Pagination({ pageCount, handlePageClick }) {
     return (
-        <div className='paginacion'>
+        <div className="paginacion">
             <ReactPaginate
-                previousLabel={'Anterior'}
-                nextLabel={'Siguiente'}
-                breakLabel={'...'}
+                previousLabel={"Anterior"}
+                nextLabel={"Siguiente"}
                 pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
-                containerClassName={'pagination'}
-                subContainerClassName={'pages pagination'}
-                activeClassName={'active'}
+                containerClassName={"paginationBttns"}
+                previousLinkClassName={"previousBttn"}
+                nextLinkClassName={"nextBttn"}
+                disabledClassName={"paginationDisabled"}
+                activeClassName={"paginationActive"}
             />
         </div>
     );

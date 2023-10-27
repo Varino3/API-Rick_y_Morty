@@ -1,8 +1,11 @@
+body {
+  width: 100%;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0px;
   text-align: center;
+  width: 100%;
 }
 
 .logo {
@@ -64,8 +67,6 @@
 .padre {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .contenedor {
@@ -75,23 +76,20 @@
 .carta {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
   border: 2px solid black;
   border-radius: 20%;
-  padding: 1rem 6rem;
-  height: 20rem;
+  padding: 30px;
+  margin: 10px 40px;
+  height: 22rem;
 }
 
 .carta>img {
-  width: 60%;
+  width: 85%;
+  height: 55%;
+  border-radius: 20%;
 }
 
 /* PAGINACIÓN */
-/* .paginacion{
-  
-} */
-
 .paginacion ul {
   list-style-type: none;
   display: flex;
@@ -99,6 +97,34 @@
 }
 
 .paginacion li {
-  color: black;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.paginacion a {
+  color: white;
+}
+
+.paginationActive a {
+  color: black;
+}
+
+.paginationDisabled a {
+  display: none;
+}
+
+/* FORMULARIO */
+.filtro {
+  border: 2px solid black;
+  padding: 0px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10%;
+}
+
+.filtro input,
+select {
+  width: 90%;
+  margin-bottom: 10px;
 }

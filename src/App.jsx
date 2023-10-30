@@ -13,16 +13,18 @@ function App() {
 
   return (
     <div>
+      {/* Botón para cambiar el tema */}
       <button onClick={toggleTheme}><FontAwesomeIcon icon={faSun} /> / <FontAwesomeIcon icon={faMoon} /></button>
       <link
         rel="stylesheet"
         type="text/css"
         href={
           isDarkTheme
-            ? 'https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css'
-            : 'https://cdn.jsdelivr.net/npm/water.css@2/out/light.css'
+            ? 'https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css' // Tema oscuro
+            : 'https://cdn.jsdelivr.net/npm/water.css@2/out/light.css' // Tema claro
         }
       />
+      {/* Muestra los personajes necesarios */}
       <div className="App">
         <Card />
       </div>

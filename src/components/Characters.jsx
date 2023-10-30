@@ -7,11 +7,12 @@ import { Formik, Form, Field } from 'formik';
 function Characters() {
     const [filteredCharacters, setFilteredCharacters] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    // Personajes por página (filtrados)
     const charactersPerPage = 4;
     const [speciesOptions, setSpeciesOptions] = useState([]);
 
     useEffect(() => {
-        // Realiza una solicitud a la API para obtener todos los personajes
+        // Conexión con la API (obtener todos personajes)
         axios.get('https://rickandmortyapi.com/api/character')
             .then((response) => {
                 setFilteredCharacters(response.data.results);
@@ -20,12 +21,13 @@ function Characters() {
                 console.error('Error de conexión', error);
             });
 
-        // Realiza una solicitud para obtener las opciones de especie
+        // Conexión con la API (obtener las especies)
         axios.get('https://rickandmortyapi.com/api/character')
             .then((speciesResponse) => {
                 const speciesList = speciesResponse.data.results.map((character) => character.species);
                 const uniqueSpecies = [...new Set(speciesList)];
-                setSpeciesOptions([...uniqueSpecies]); // Agrega la opción vacía y especies únicas
+                // Agrega las especies únicas
+                setSpeciesOptions([...uniqueSpecies]);
             })
             .catch((error) => {
                 console.error('Error al obtener las opciones de especie', error);
@@ -46,33 +48,37 @@ function Characters() {
                 onSubmit={(values) => {
                     let newFilteredCharacters = filteredCharacters;
 
-                    // Realiza los filtros basados en los valores del formulario
+                    // Realiza los filtros en función de los valores del formulario introducidos por el usuario
+                    // Filtro por nombre
                     if (values.name) {
                         newFilteredCharacters = newFilteredCharacters.filter((character) =>
                             character.name.toLowerCase().includes(values.name.toLowerCase())
                         );
                     }
 
+                    // Filtro por género
                     if (values.gender) {
                         newFilteredCharacters = newFilteredCharacters.filter((character) =>
                             character.gender === values.gender
                         );
                     }
 
+                    // Filtro por especies
                     if (values.species) {
                         newFilteredCharacters = newFilteredCharacters.filter((character) =>
                             character.species === values.species
                         );
                     }
 
-                    // Actualiza el estado con los personajes filtrados
+                    // Actualiza el estado únicamente con los personajes filtrados
                     setFilteredCharacters(newFilteredCharacters);
 
-                    // Reinicia la paginación
+                    // Resetea la paginación
                     setCurrentPage(1);
                 }}
             >
                 {() => (
+                    // Aquí se muestra el formulario como tal
                     <Form>
                         <div className="filtro">
                             <h2>Formulario de filtros</h2>
@@ -95,11 +101,13 @@ function Characters() {
                     </Form>
                 )}
             </Formik>
+            {/* Carta con la información de cada personaje */}
             <div className='padre'>
                 {filteredCharacters.slice(offset, offset + charactersPerPage).map((character) => (
                     <div key={character.id} className='contenedor'>
                         <h2>{character.id}. {character.name}</h2>
                         <div className='carta'>
+                            {/* Condicional para saber si está vivo a muerto */}
                             <div className={`status-circulo ${character.status === 'Alive' ? 'vivo' : 'muerto'}`}></div>
                             <img src={character.image} alt={character.name} />
                             <p>Nombre: {character.name}</p>
@@ -108,6 +116,7 @@ function Characters() {
                     </div>
                 ))}
             </div>
+            {/* Muestra la paginación teniendo en cuenta los filtros */}
             <Pagination pageCount={Math.ceil(filteredCharacters.length / charactersPerPage)} handlePageClick={handlePageClick} />
         </>
     );

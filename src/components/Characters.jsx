@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
 import Pagination from './Pagination';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 function Characters() {
     const [filteredCharacters, setFilteredCharacters] = useState([]);
@@ -41,7 +41,6 @@ function Characters() {
     return (
         <>
             <h1>Personajes de Rick&Morty</h1>
-            <button id='replace-theme'>Oscuro/Claro</button>
             <Formik
                 initialValues={{ name: '', gender: '', species: '' }}
                 onSubmit={(values) => {
@@ -82,7 +81,6 @@ function Characters() {
                                 <option value="">Filtrar por género</option>
                                 <option value="Male">Masculino</option>
                                 <option value="Female">Femenino</option>
-                                <option value="unknown">Desconocido</option>
                             </Field>
                             <Field as="select" name="species">
                                 <option value="">Filtrar por especie</option>

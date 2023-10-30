@@ -102,11 +102,11 @@ body {
 }
 
 .paginacion a {
-  color: white;
+  color: black;
 }
 
 .paginationActive a {
-  color: black;
+  color: gray;
 }
 
 .paginationDisabled a {

@@ -41,6 +41,7 @@ function Characters() {
     return (
         <>
             <h1>Personajes de Rick&Morty</h1>
+            <button id='replace-theme'>Oscuro/Claro</button>
             <Formik
                 initialValues={{ name: '', gender: '', species: '' }}
                 onSubmit={(values) => {

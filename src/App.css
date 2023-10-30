@@ -128,3 +128,12 @@ select {
   width: 90%;
   margin-bottom: 10px;
 }
+
+/* BOTON TEMA */
+#root > div > button {
+  margin-left: 85%;
+}
+
+#root > div > button > svg{
+  font-size: 1.2rem;
+}

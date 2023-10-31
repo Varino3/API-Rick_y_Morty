@@ -1,40 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../App.css';
 import Pagination from './Pagination';
 import { Formik, Form, Field } from 'formik';
+import '../App.css';
 
-function Characters() {
-    const [filteredCharacters, setFilteredCharacters] = useState([]);
+function Characters({ characters }) {
     const [currentPage, setCurrentPage] = useState(1);
-    // Personajes por página (filtrados)
-    const charactersPerPage = 4;
-    const [speciesOptions, setSpeciesOptions] = useState([]);
+    const [charactersPerPage] = useState(4);
+    const [filteredCharacters, setFilteredCharacters] = useState(characters);
+    const [speciesOptions, setSpeciesOptions] = useState([]); // Define speciesOptions
 
     useEffect(() => {
-        // Conexión con la API (obtener todos personajes)
-        axios.get('https://rickandmortyapi.com/api/character')
-            .then((response) => {
-                setFilteredCharacters(response.data.results);
-            })
-            .catch((error) => {
-                console.error('Error de conexión', error);
-            });
+        // Restablecer los personajes filtrados cuando cambia la lista de personajes
+        setFilteredCharacters(characters);
 
-        // Conexión con la API (obtener las especies)
-        axios.get('https://rickandmortyapi.com/api/character')
-            .then((speciesResponse) => {
-                const speciesList = speciesResponse.data.results.map((character) => character.species);
-                const uniqueSpecies = [...new Set(speciesList)];
-                // Agrega las especies únicas
-                setSpeciesOptions([...uniqueSpecies]);
-            })
-            .catch((error) => {
-                console.error('Error al obtener las opciones de especie', error);
-            });
-    }, []);
+        // Obtener las opciones de especies de los personajes
+        const uniqueSpecies = [...new Set(characters.map((character) => character.species))];
+        setSpeciesOptions(uniqueSpecies);
+    }, [characters]);
 
     const handlePageClick = ({ selected }) => {
+        // Actualizar la página actual
         setCurrentPage(selected + 1);
     };
 
@@ -46,7 +31,7 @@ function Characters() {
             <Formik
                 initialValues={{ name: '', gender: '', species: '' }}
                 onSubmit={(values) => {
-                    let newFilteredCharacters = filteredCharacters;
+                    let newFilteredCharacters = characters;
 
                     // Realiza los filtros en función de los valores del formulario introducidos por el usuario
                     // Filtro por nombre
@@ -63,7 +48,7 @@ function Characters() {
                         );
                     }
 
-                    // Filtro por especies
+                    // Filtro por especie
                     if (values.species) {
                         newFilteredCharacters = newFilteredCharacters.filter((character) =>
                             character.species === values.species
@@ -78,7 +63,6 @@ function Characters() {
                 }}
             >
                 {() => (
-                    // Aquí se muestra el formulario como tal
                     <Form>
                         <div className="filtro">
                             <h2>Formulario de filtros</h2>
@@ -102,12 +86,14 @@ function Characters() {
                 )}
             </Formik>
             {/* Carta con la información de cada personaje */}
-            <div className='padre'>
+            <div className="padre">
                 {filteredCharacters.slice(offset, offset + charactersPerPage).map((character) => (
-                    <div key={character.id} className='contenedor'>
-                        <h2>{character.id}. {character.name}</h2>
-                        <div className='carta'>
-                            {/* Condicional para saber si está vivo a muerto */}
+                    <div key={character.id} className="contenedor">
+                        <h2>
+                            {character.id}. {character.name}
+                        </h2>
+                        <div className="carta">
+                            {/* Condicional para saber si está vivo o muerto */}
                             <div className={`status-circulo ${character.status === 'Alive' ? 'vivo' : 'muerto'}`}></div>
                             <img src={character.image} alt={character.name} />
                             <p>Nombre: {character.name}</p>

@@ -20,3 +20,4 @@ function Pagination({ pageCount, handlePageClick }) {
 }
 
 export default Pagination;
+

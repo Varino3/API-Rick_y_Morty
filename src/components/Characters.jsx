@@ -7,60 +7,61 @@ function Characters({ characters }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [charactersPerPage] = useState(4);
     const [filteredCharacters, setFilteredCharacters] = useState(characters);
-    const [speciesOptions, setSpeciesOptions] = useState([]); // Define speciesOptions
+    const [speciesOptions, setSpeciesOptions] = useState([]);
+    const [noResults, setNoResults] = useState(false); // Estado para indicar si no se encontraron resultados
 
     useEffect(() => {
-        // Restablecer los personajes filtrados cuando cambia la lista de personajes
         setFilteredCharacters(characters);
 
-        // Obtener las opciones de especies de los personajes
         const uniqueSpecies = [...new Set(characters.map((character) => character.species))];
         setSpeciesOptions(uniqueSpecies);
     }, [characters]);
 
     const handlePageClick = ({ selected }) => {
-        // Actualizar la página actual
         setCurrentPage(selected + 1);
     };
 
     const offset = (currentPage - 1) * charactersPerPage;
 
+    const handleSearchSubmit = (values) => {
+        let newFilteredCharacters = characters;
+
+        if (values.name) {
+            newFilteredCharacters = newFilteredCharacters.filter((character) =>
+                character.name.toLowerCase().includes(values.name.toLowerCase())
+            );
+        }
+
+        if (values.gender) {
+            newFilteredCharacters = newFilteredCharacters.filter((character) =>
+                character.gender === values.gender
+            );
+        }
+
+        if (values.species) {
+            newFilteredCharacters = newFilteredCharacters.filter((character) =>
+                character.species === values.species
+            );
+        }
+
+        setFilteredCharacters(newFilteredCharacters);
+
+        // Verificar si no se encontraron resultados
+        if (newFilteredCharacters.length === 0) {
+            setNoResults(true);
+        } else {
+            setNoResults(false);
+        }
+
+        setCurrentPage(1);
+    };
+
     return (
-        <>
+        <div className="characters-container">
             <h1>Personajes de Rick&Morty</h1>
             <Formik
                 initialValues={{ name: '', gender: '', species: '' }}
-                onSubmit={(values) => {
-                    let newFilteredCharacters = characters;
-
-                    // Realiza los filtros en función de los valores del formulario introducidos por el usuario
-                    // Filtro por nombre
-                    if (values.name) {
-                        newFilteredCharacters = newFilteredCharacters.filter((character) =>
-                            character.name.toLowerCase().includes(values.name.toLowerCase())
-                        );
-                    }
-
-                    // Filtro por género
-                    if (values.gender) {
-                        newFilteredCharacters = newFilteredCharacters.filter((character) =>
-                            character.gender === values.gender
-                        );
-                    }
-
-                    // Filtro por especie
-                    if (values.species) {
-                        newFilteredCharacters = newFilteredCharacters.filter((character) =>
-                            character.species === values.species
-                        );
-                    }
-
-                    // Actualiza el estado únicamente con los personajes filtrados
-                    setFilteredCharacters(newFilteredCharacters);
-
-                    // Resetea la paginación
-                    setCurrentPage(1);
-                }}
+                onSubmit={handleSearchSubmit}
             >
                 {() => (
                     <Form>
@@ -85,15 +86,18 @@ function Characters({ characters }) {
                     </Form>
                 )}
             </Formik>
-            {/* Carta con la información de cada personaje */}
+            {noResults && (
+                <div className="no-results-container">
+                    <p>No se encontraron resultados</p>
+                </div>
+            )}
             <div className="padre">
                 {filteredCharacters.slice(offset, offset + charactersPerPage).map((character) => (
-                    <div key={character.id} className="contenedor">
+                     <div key={character.id} className='contenedor'>
                         <h2>
                             {character.id}. {character.name}
                         </h2>
                         <div className="carta">
-                            {/* Condicional para saber si está vivo o muerto */}
                             <div className={`status-circulo ${character.status === 'Alive' ? 'vivo' : 'muerto'}`}></div>
                             <img src={character.image} alt={character.name} />
                             <p>Nombre: {character.name}</p>
@@ -102,9 +106,8 @@ function Characters({ characters }) {
                     </div>
                 ))}
             </div>
-            {/* Muestra la paginación teniendo en cuenta los filtros */}
             <Pagination pageCount={Math.ceil(filteredCharacters.length / charactersPerPage)} handlePageClick={handlePageClick} />
-        </>
+        </div>
     );
 }
 

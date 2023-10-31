@@ -49,8 +49,8 @@ body {
 
 /* VIVO O MUERTO */
 .status-circulo {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 60%;
   margin-left: 85%;
 }
@@ -130,10 +130,16 @@ select {
 }
 
 /* BOTON TEMA */
-#root > div > button {
+#root>div>button {
   margin-left: 85%;
 }
 
-#root > div > button > svg{
+#root>div>button>svg {
   font-size: 1.2rem;
+}
+
+/* SIN RESULTADOS */
+.no-results-container {
+  text-align: center;
+  padding: 10px;
 }

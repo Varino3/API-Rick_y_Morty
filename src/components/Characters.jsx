@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
-import { Formik, Form, Field } from 'formik';
+import FilterForm from './FilterForm';
 import '../App.css';
 import ExportToExcelButton from './ExportToExcelButton';
 
@@ -60,33 +60,7 @@ function Characters({ characters }) {
     return (
         <div className="characters-container">
             <h1>Personajes de Rick&Morty</h1>
-            <Formik
-                initialValues={{ name: '', gender: '', species: '' }}
-                onSubmit={handleSearchSubmit}
-            >
-                {() => (
-                    <Form>
-                        <div className="filtro">
-                            <h2>Formulario de filtros</h2>
-                            <Field type="text" name="name" placeholder="Filtrar por nombre" />
-                            <Field as="select" name="gender">
-                                <option value="">Filtrar por género</option>
-                                <option value="Male">Masculino</option>
-                                <option value="Female">Femenino</option>
-                            </Field>
-                            <Field as="select" name="species">
-                                <option value="">Filtrar por especie</option>
-                                {speciesOptions.map((species) => (
-                                    <option key={species} value={species}>
-                                        {species}
-                                    </option>
-                                ))}
-                            </Field>
-                            <button type="submit">Buscar</button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+            <FilterForm onSubmit={handleSearchSubmit} speciesOptions={speciesOptions} />
             {noResults && (
                 <div className="no-results-container">
                     <p>No se encontraron resultados</p>

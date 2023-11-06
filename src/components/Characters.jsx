@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
 import { Formik, Form, Field } from 'formik';
 import '../App.css';
+import ExportToExcelButton from './ExportToExcelButton';
 
 function Characters({ characters }) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -91,9 +92,12 @@ function Characters({ characters }) {
                     <p>No se encontraron resultados</p>
                 </div>
             )}
+
+            <ExportToExcelButton characters={filteredCharacters} />
+
             <div className="padre">
                 {filteredCharacters.slice(offset, offset + charactersPerPage).map((character) => (
-                     <div key={character.id} className='contenedor'>
+                    <div key={character.id} className='contenedor'>
                         <h2>
                             {character.id}. {character.name}
                         </h2>

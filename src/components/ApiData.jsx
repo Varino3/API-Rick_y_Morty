@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+// TODO: Guardar estado en REDUX 
 
 function ApiData({ children }) {
   const [characters, setCharacters] = useState([]);

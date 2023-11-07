@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Card from './components/Card';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 // Mostrar APP por pantalla
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-
+  const state = useSelector(st => st);
+  console.log('ESTADO', state);
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
